@@ -1,0 +1,32 @@
+{
+    "name": "van-der-wolf/telegram-bundle",
+    "description": "Telegram bundle for symfony",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Van der Wolf",
+            "email": "prokopenko.ivan.93@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "symfony/http-kernel": "~3.4 || ~4.0 || ^5.0",
+        "symfony/orm-pack": "^1.0",
+        "telegram-bot/api": "dev-bugfix"
+    },
+    "autoload": {
+        "psr-4": {
+            "VanDerWolf\\Bundle\\TelegramBundle\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/van-der-wolf/Api"
+        }
+    ]
+}
