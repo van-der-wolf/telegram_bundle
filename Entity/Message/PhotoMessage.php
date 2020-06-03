@@ -16,7 +16,7 @@ class PhotoMessage extends Message
 
     /**
      * @ORM\ManyToMany(targetEntity="VanDerWolf\Bundle\TelegramBundle\Entity\Photo", cascade={"persist", "remove"})
-     * @ORM\JoinTable(name="photo_telegram_message_photos",
+     * @ORM\JoinTable(name="telegram_photo_telegram_message_photos",
      *      joinColumns={@ORM\JoinColumn(name="photo_message_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="photo_id", referencedColumnName="id")} )
      */

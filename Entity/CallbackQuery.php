@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="callback_query")
+ * @ORM\Table(name="telegram_callback_query")
  */
 class CallbackQuery
 {

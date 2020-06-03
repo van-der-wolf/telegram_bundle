@@ -13,7 +13,7 @@ use VanDerWolf\Bundle\TelegramBundle\Entity\User;
 /**
  * @ORM\Entity(repositoryClass="VanDerWolf\Bundle\TelegramBundle\Repository\Telegram\Message\MessageRepository")
  * @ORM\Table(name="telegram_message")
- * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({
  *     "text" = "VanDerWolf\Bundle\TelegramBundle\Entity\Message\TextMessage",
@@ -25,30 +25,64 @@ abstract class Message
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="id")
      */
-    private int $id;
+    protected int $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="VanDerWolf\Bundle\TelegramBundle\Entity\User")
+     * @ORM\JoinColumn(name="from")
+     */
+    protected User $from;
+
+    /**
+     * @ORM\Column(type="bigint", name="message_id")
+     */
+    protected int $messageId;
+
+    /**
+     * @ORM\Column(type="datetime", name="date")
+     */
+    protected DateTimeInterface $date;
+    /**
+     * @ORM\ManyToOne(targetEntity="VanDerWolf\Bundle\TelegramBundle\Entity\Chat")
+     * @ORM\JoinColumn(name="chat", referencedColumnName="id", nullable=false)
+     */
+    protected Chat $chat;
+    /**
+     * @ORM\ManyToOne(targetEntity="VanDerWolf\Bundle\TelegramBundle\Entity\User")
+     * @ORM\JoinColumn(name="forward_from", referencedColumnName="id", nullable=true)
+     */
+    protected ?User $forwardFrom = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="VanDerWolf\Bundle\TelegramBundle\Entity\Chat")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="forward_from_chat", referencedColumnName="id", nullable=true)
      */
-    private Chat $chat;
+    protected ?Chat $forwardFromChat = null;
 
     /**
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(type="integer", name="forward_from_message_id", nullable=true)
      */
-    private int $messageId;
+    protected ?int $forwardFromMessageId = null;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string", length=255, name="forward_signature", nullable=true)
      */
-    private DateTimeInterface $date;
-
+    private ?string $forwardSignature = null;
+    /**
+     * @ORM\Column(type="string", length=255, name="forward_sender_name", nullable=true)
+     */
+    private ?string $forwardSenderName = null;
+    /**
+     * @ORM\Column(type="integer", name="forward_date", nullable=true)
+     */
+    private ?int $forwardDate = null;
     /**
      * @ORM\OneToOne(targetEntity="VanDerWolf\Bundle\TelegramBundle\Entity\Keyboard\TelegramKeyboard", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="keyboard", referencedColumnName="id")
      */
-    private ?TelegramKeyboard $keyboard = null;
+    protected ?TelegramKeyboard $keyboard = null;
 
     public static function create(\TelegramBot\Api\Types\Message $tgMessage): Message
     {

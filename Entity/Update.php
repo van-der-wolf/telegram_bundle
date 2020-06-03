@@ -73,7 +73,7 @@ class Update
 
     public static function createFromTgUpdate(TgUpdate $tgUpdate): Update
     {
-        /*$update = new Update();
+        $update = new Update();
         $update->setUpdateId($tgUpdate->getUpdateId());
         if ($tgUpdate->getMessage()) {
             $message = new Message

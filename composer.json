@@ -23,10 +23,10 @@
             "/Tests/"
         ]
     },
-    "repositories": [
-        {
+    "repositories": {
+        "telegram-bot/api": {
             "type": "vcs",
             "url": "https://github.com/van-der-wolf/Api"
         }
-    ]
+    }
 }
