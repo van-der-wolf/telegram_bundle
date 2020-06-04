@@ -68,4 +68,5 @@ class PhotoMessage extends Message
         $this->caption = $caption;
         return $this;
     }
+
 }

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace VanDerWolf\Bundle\TelegramBundle\Repository\Telegram;
+namespace VanDerWolf\Bundle\TelegramBundle\Repository;
 
 use Exception;
 use VanDerWolf\Bundle\TelegramBundle\Entity\InlineQuery;

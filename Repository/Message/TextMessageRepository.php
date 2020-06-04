@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace VanDerWolf\Bundle\TelegramBundle\Repository\Telegram\Message;
+namespace VanDerWolf\Bundle\TelegramBundle\Repository\Message;
 
 use VanDerWolf\Bundle\TelegramBundle\Entity\Message\TextMessage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

@@ -6,6 +6,8 @@ namespace VanDerWolf\Bundle\TelegramBundle\Entity\Message;
 use DateTimeInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
+use TelegramBot\Api\Types\Message as TgMessage;
 use VanDerWolf\Bundle\TelegramBundle\Entity\Chat;
 use VanDerWolf\Bundle\TelegramBundle\Entity\Keyboard\TelegramKeyboard;
 use VanDerWolf\Bundle\TelegramBundle\Entity\User;
@@ -84,10 +86,20 @@ abstract class Message
      */
     protected ?TelegramKeyboard $keyboard = null;
 
-    public static function create(\TelegramBot\Api\Types\Message $tgMessage): Message
+    public static function create(TgMessage $tgMessage): Message
     {
-
+        switch (true) {
+            case !empty($tgMessage->getText()):
+                return TextMessage::createMessage($tgMessage);
+            case !empty($tgMessage->getPhoto()):
+                return PhotoMessage::createMessage($tgMessage);
+            case !empty($tgMessage->getDocument()):
+                return DocumentMessage::createMessage($tgMessage);
+        }
+        throw new Exception('Failed to identify message type');
     }
+
+    protected abstract static function createMessage(TgMessage $message): Message;
 
     public function getId()
     {

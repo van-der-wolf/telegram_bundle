@@ -5,6 +5,7 @@ namespace VanDerWolf\Bundle\TelegramBundle\Entity\Message;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use TelegramBot\Api\Types\Message as TgMessage;
 
 /**
  * @ORM\Entity(repositoryClass="VanDerWolf\Bundle\TelegramBundle\Repository\Telegram\Message\TextMessageRepository")
@@ -34,11 +35,12 @@ class TextMessage extends Message
         return $this;
     }
 
-    public static function create(\TelegramBot\Api\Types\Message $tgMessage): self {
+    public static function create(TgMessage $tgMessage): Message
+    {
         $message = new TextMessage();
         $message->messageId = $tgMessage->getMessageId();
-        $message->setMessageId($tgMessage->getMessageId())
-            ->setUser($user)
-            ->setDate((new DateTime())->setTimestamp($tgMessage->getDate()));
+        $message->date = (new DateTime())->setTimestamp($tgMessage->getDate());
+        $message->text = $tgMessage->getText();
+        return $message;
     }
 }

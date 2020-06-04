@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace VanDerWolf\Bundle\TelegramBundle\Repository\Telegram;
+namespace VanDerWolf\Bundle\TelegramBundle\Repository;
 
 use VanDerWolf\Bundle\TelegramBundle\Entity\Photo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

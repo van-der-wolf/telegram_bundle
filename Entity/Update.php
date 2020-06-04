@@ -26,6 +26,12 @@ class Update
      */
     private int $updateId = 0;
     /**
+     * @var int
+     * @ORM\OneToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(name="chat_id", referencedColumnName="id", nullable=true)
+     */
+    private User $chat;
+    /**
      * @ORM\OneToOne(targetEntity="VanDerWolf\Bundle\TelegramBundle\Entity\Message\Message", cascade={"persist", "remove"})
      */
     private ?Message $message = null;
@@ -69,33 +75,6 @@ class Update
      * @ORM\OneToOne(targetEntity="VanDerWolf\Bundle\TelegramBundle\Entity\PollAnswer", cascade={"persist", "remove"})
      */
     private ?PollAnswer $pollAnswer = null;
-
-
-    public static function createFromTgUpdate(TgUpdate $tgUpdate): Update
-    {
-        $update = new Update();
-        $update->setUpdateId($tgUpdate->getUpdateId());
-        if ($tgUpdate->getMessage()) {
-            $message = new Message
-            $message = $this->messageSaver->save($tgUpdate->getMessage());
-            $update->setMessage($message);
-        }
-        if ($tgUpdate->getEditedMessage()) {
-            $message = $this->editedMessageSaver->save($tgUpdate->getEditedMessage());
-            $update->setEditedMessage($message);
-        }
-        if ($tgUpdate->getInlineQuery()) {
-            $inlineQuery = $this->inlineQuerySaver->save($tgUpdate->getInlineQuery());
-            $update->setInlineQuery($inlineQuery);
-        }
-        if ($tgUpdate->getChosenInlineResult()) {
-            $result = $this->choosenInlineSaver->save($tgUpdate->getChosenInlineResult());
-            $update->setChoosenInlineResult($result);
-        }
-        if ($tgUpdate->getCallbackQuery()) {
-
-        }*/
-    }
 
     /**
      * @return mixed
@@ -205,6 +184,26 @@ class Update
         $this->editedMessage = $editedMessage;
 
         return $this;
+    }
+
+    public static function create(TgUpdate $tgUpdate): self {
+        $update = new Update;
+        /*
+         * 'update_id' => true,
+        'message' => Message::class,
+        'edited_message' => Message::class,
+        'channel_post' => Message::class,
+        'edited_channel_post' => Message::class,
+        'inline_query' => InlineQuery::class,
+        'chosen_inline_result' => ChosenInlineResult::class,
+        'callback_query' => CallbackQuery::class,
+        'shipping_query' => ShippingQuery::class,
+        'pre_checkout_query' => PreCheckoutQuery::class,
+         */
+        $update->updateId = $tgUpdate->getUpdateId();
+        if (!empty($tgUpdate->getMessage())) {
+            $update->message = Message::create()
+        }
     }
 
 }
