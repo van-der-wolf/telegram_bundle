@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="VanDerWolf\Bundle\TelegramBundle\Repository\Telegram\InlineQueryRepository")
+ * @ORM\Table(name="telegram_inline_query")
  */
 class InlineQuery
 {
